@@ -23,7 +23,7 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     LZHAutoDictionary *dict = [LZHAutoDictionary new];
-    dict.date = [NSDate dateWithTimeIntervalSinceNow:0];
+    dict.date = [NSDate dateWithTimeIntervalSince1970:3452345234];
     NSLog(@"dict.date = %@", dict.date);
     
     Teacher *teacher = [[Teacher alloc] init];

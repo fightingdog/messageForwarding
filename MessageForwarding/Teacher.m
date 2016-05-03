@@ -8,9 +8,27 @@
 
 #import "Teacher.h"
 #import "Doctor.h"
+#import <objc/runtime.h>
+
+void operate(id self, SEL _cmd) {
+    NSLog(@"Doctor operate!");
+}
 
 @implementation Teacher
 
+// 动态方法解析
+//+ (BOOL)resolveInstanceMethod:(SEL)sel
+//{
+//    NSString *selectorString = NSStringFromSelector(sel);
+//    if ([selectorString isEqualToString:@"operate"]) {
+//        class_addMethod(self, sel, (IMP)operate, "v@:");
+//        return YES;
+//    }
+//    return [super resolveInstanceMethod:sel];
+//}
+
+
+// 快速消息转发
 //- (id)forwardingTargetForSelector:(SEL)aSelector
 //{
 //    Doctor *doctor = [[Doctor alloc] init];
@@ -20,6 +38,7 @@
 //    return  [super forwardingTargetForSelector:aSelector];
 //}
 
+// 标准消息转发
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector{
     NSMethodSignature *sig = nil;
     NSString *selStr = NSStringFromSelector(aSelector);

@@ -9,34 +9,12 @@
 #import "LZHAutoDictionary.h"
 #import <objc/runtime.h>
 
+
 @interface LZHAutoDictionary()
 
 @property (nonatomic, strong) NSMutableDictionary *backingStore;
 
 @end
-
-@implementation LZHAutoDictionary
-
-@dynamic string, number, date, opaqueObject;
-
-- (id)init {
-    self = [super init];
-    if (self) {
-        _backingStore = [[NSMutableDictionary alloc] init];
-    }
-    return self;
-}
-
-+ (BOOL)resolveInstanceMethod:(SEL)selector
-{
-    NSString *selectorString = NSStringFromSelector(selector);
-    if ([selectorString hasPrefix:@"set"]) {
-        class_addMethod(self, selector, (IMP)autoDictionarySetter, "v@:@");
-    } else {
-        class_addMethod(self, selector, (IMP)autoDictionaryGetter, "@@:");
-    }
-    return YES;
-}
 
 id autoDictionaryGetter(id self, SEL _cmd) {
     LZHAutoDictionary *typedSelf = (LZHAutoDictionary *)self;
@@ -67,4 +45,28 @@ void autoDictionarySetter(id self, SEL _cmd, id value) {
         [backingStore removeObjectForKey:key];
     }
 }
+
+@implementation LZHAutoDictionary
+
+@dynamic string, number, date, opaqueObject;
+
+- (id)init {
+    self = [super init];
+    if (self) {
+        _backingStore = [[NSMutableDictionary alloc] init];
+    }
+    return self;
+}
+
++ (BOOL)resolveInstanceMethod:(SEL)selector
+{
+    NSString *selectorString = NSStringFromSelector(selector);
+    if ([selectorString hasPrefix:@"set"]) {
+        class_addMethod(self, selector, (IMP)autoDictionarySetter, "v@:@");
+    } else {
+        class_addMethod(self, selector, (IMP)autoDictionaryGetter, "@@:");
+    }
+    return YES;
+}
+
 @end

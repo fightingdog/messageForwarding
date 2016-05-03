@@ -6,6 +6,7 @@
 //  Copyright © 2016年 liuzhao. All rights reserved.
 //
 
+// 使用动态解析方法实现 @dynamic 属性
 #import <Foundation/Foundation.h>
 
 @interface LZHAutoDictionary : NSObject
